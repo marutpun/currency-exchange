@@ -5,7 +5,12 @@ import axios from 'axios';
 import { Currency } from '../components';
 import { DispatchContext, StateContext } from '../contexts/CurrencyContext';
 
-import { fetchInit, fetchSuccess, fetchFailure, updateTime } from '../reducers/currencyReducer';
+import {
+  fetchInit,
+  fetchSuccess,
+  fetchFailure,
+  updateTime,
+} from '../reducers/currencyReducer';
 
 export function CurrencyContainer() {
   const { country, exchangeRate, time } = useContext(StateContext);
@@ -16,7 +21,9 @@ export function CurrencyContainer() {
       dispatch(fetchInit());
 
       try {
-        const response = await axios('https://api.exchangeratesapi.io/latest?base=THB');
+        const response = await axios(
+          `http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.EXCHANGE_RATE_API}`
+        );
 
         const {
           data: { rates, date },
@@ -41,7 +48,7 @@ export function CurrencyContainer() {
 
   return (
     <Currency>
-      <Currency.Title>Cheat Sheet: {titleUpperCase} - THB</Currency.Title>
+      <Currency.Title>Cheat Sheet: EUR - {titleUpperCase}</Currency.Title>
       <Currency.Select />
       <Currency.Grid>
         <Currency.GridCol>

@@ -8,7 +8,7 @@ export const SET_LOADING = 'SET_LOADING';
 export const SET_TIME = 'SET_TIME';
 
 export const initialState = {
-  country: 'myr',
+  country: 'sgd',
   exchangeRate: 0,
   time: '',
   isLoading: false,

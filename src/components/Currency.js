@@ -30,7 +30,12 @@ Currency.Select = function CurrencySelect({ ...restProps }) {
 
   return (
     <section className="utils-my-4" {...restProps}>
-      <Select placeholder="Select your currency" options={countryCode} defaultValue={country} onChange={_handleSelectChange} />
+      <Select
+        placeholder="Select your currency"
+        options={countryCode}
+        defaultValue={country}
+        onChange={_handleSelectChange}
+      />
     </section>
   );
 };
@@ -54,50 +59,52 @@ Currency.Table = function CurrencyTable({ denom, rate, ...restProps }) {
     <Table inverted compact {...restProps}>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell className="center aligned">{titleUpperCase}</Table.HeaderCell>
-          <Table.HeaderCell className="center aligned">THB</Table.HeaderCell>
+          <Table.HeaderCell className="center aligned">EUR</Table.HeaderCell>
+          <Table.HeaderCell className="center aligned">
+            {titleUpperCase}
+          </Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
         <Table.Row>
           <Table.Cell>{(denom * 1).toFixed(2)}</Table.Cell>
-          <Table.Cell>{((denom * 1) / rate).toFixed(2)}</Table.Cell>
+          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>{(denom * 2).toFixed(2)}</Table.Cell>
-          <Table.Cell>{((denom * 2) / rate).toFixed(2)}</Table.Cell>
+          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>{(denom * 3).toFixed(2)}</Table.Cell>
-          <Table.Cell>{((denom * 3) / rate).toFixed(2)}</Table.Cell>
+          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>{(denom * 4).toFixed(2)}</Table.Cell>
-          <Table.Cell>{((denom * 4) / rate).toFixed(2)}</Table.Cell>
+          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>{(denom * 5).toFixed(2)}</Table.Cell>
-          <Table.Cell>{((denom * 5) / rate).toFixed(2)}</Table.Cell>
+          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>{(denom * 6).toFixed(2)}</Table.Cell>
-          <Table.Cell>{((denom * 6) / rate).toFixed(2)}</Table.Cell>
+          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>{(denom * 7).toFixed(2)}</Table.Cell>
-          <Table.Cell>{((denom * 7) / rate).toFixed(2)}</Table.Cell>
+          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>{(denom * 8).toFixed(2)}</Table.Cell>
-          <Table.Cell>{((denom * 8) / rate).toFixed(2)}</Table.Cell>
+          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>{(denom * 9).toFixed(2)}</Table.Cell>
-          <Table.Cell>{((denom * 9) / rate).toFixed(2)}</Table.Cell>
+          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>{(denom * 10).toFixed(2)}</Table.Cell>
-          <Table.Cell>{((denom * 10) / rate).toFixed(2)}</Table.Cell>
+          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
         </Table.Row>
       </Table.Body>
     </Table>
