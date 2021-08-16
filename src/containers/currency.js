@@ -21,9 +21,7 @@ export function CurrencyContainer() {
       dispatch(fetchInit());
 
       try {
-        const response = await axios(
-          `http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.EXCHANGE_RATE_API}`
-        );
+        const response = await axios(`.netlify/functions/fetchExchangeRate`);
 
         const {
           data: { rates, date },
