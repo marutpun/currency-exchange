@@ -43,6 +43,7 @@ typings/
 # Optional npm cache directory
 .npm
 .cache
+.parcel-cache
 
 # Optional eslint cache
 .eslintcache
