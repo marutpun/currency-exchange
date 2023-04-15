@@ -5,12 +5,11 @@ export const FETCH_FAILURE = 'FETCH_FAILURE';
 export const CHANGE_COUNTRY = 'CHANGE_COUNTRY';
 export const SET_ERROR = 'SET_ERROR';
 export const SET_LOADING = 'SET_LOADING';
-export const SET_TIME = 'SET_TIME';
 
 export const initialState = {
-  country: 'sgd',
-  exchangeRate: 0,
-  time: '',
+  countryState: 'sgd',
+  exchangeRateSGD: 0,
+  exchangeRateMYR: 0,
   isLoading: false,
   isError: false,
 };
@@ -24,7 +23,8 @@ export default function currencyReducer(state, action) {
         ...state,
         isLoading: false,
         isError: false,
-        exchangeRate: action.payload,
+        exchangeRateSGD: action.payload[0],
+        exchangeRateMYR: action.payload[1],
       };
     case FETCH_FAILURE:
       return {
@@ -34,10 +34,8 @@ export default function currencyReducer(state, action) {
       };
 
     case CHANGE_COUNTRY:
-      return { ...state, country: action.payload };
+      return { ...state, countryState: action.payload };
 
-    case SET_TIME:
-      return { ...state, time: action.payload };
     default:
       return state;
   }
@@ -69,12 +67,5 @@ export function changeCountry(newCountry) {
   return {
     type: CHANGE_COUNTRY,
     payload: newCountry,
-  };
-}
-
-export function updateTime(date) {
-  return {
-    type: SET_TIME,
-    payload: date,
   };
 }

@@ -1,9 +1,0 @@
-.utils-my-4 {
-  padding: 15px 0 !important;
-}
-
-@media (min-width: 40.0625em) {
-  .utils-my-4 {
-    padding: 20px 0 !important;
-  }
-}

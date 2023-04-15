@@ -1,10 +1,4 @@
 [
-  { "key": "sgd",
-    "value": "sgd",
-    "text": "Singapore Dollar (SGD)"
-  },
-  { "key": "myr",
-    "value": "myr",
-    "text": "Malaysian Ringgit (MYR)"
-  }
+  { "key": "sgd", "value": "sgd", "text": "Singapore Dollar (SGD)", "isDefault": true },
+  { "key": "myr", "value": "myr", "text": "Malaysian Ringgit (MYR)", "isDefault": false }
 ]
