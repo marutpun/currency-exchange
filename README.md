@@ -2,69 +2,45 @@
 
 A currency exchange table for shopaholic.
 
-Demo: https://stoic-fermat-ce79f5.netlify.app
+View: https://stoic-fermat-ce79f5.netlify.app
 
-I use parcel, react, axios and semantic-ui. API provided by ExchangeRatesAPI
+API provided by ExchangeRatesAPI (500 req/month).
 
-## Newbie notes
+## Change logs
 
-- You can combine a state, dispatch `StateContext.Provider value={state}` and `DispatchContext.Provider value={dispatch}` and export (return) from main context `MainContext()`. See `src/context/CurrencyContext.js`
+- Upgrade Parcel bundler to v2. (Spent 1-2 hours to finish it.)
+- Added TailwindCSS, removed Semantic UI
+- Fully migrated state from component to container
+- Migrated to React 18
+- Design made with Atkinson Hyperlegible font
+- Removed update currency time. USELESS!
 
-## Netlify Functions Guide
+## Tools
 
-### Create serverless function.
+- Parcel Bundler
+- ReactJS, ReactDOM
+- TailwindCSS
+- Axios
+- Netlify, Netlify function
+- ExchangeRatesAPI
 
-1. Create `netlify.toml` and put
+## Netlify function
 
-```
- [build]
-   # Directory of function
-   functions = "functions/"
-   publish = "src"
-```
+### Create
 
-2. Create `functions/YOUR_FUNCTION.js`
-   2.1 Create a function with async name **handler** ONLY!
-   2.2 Fetch an API (add API Key to .env)
-   2.3 For success, Return an object with `statusCode: 200, body: JSON.stringify(response.data)`. If you get an error, return an object with `statusCode: 404, body: error.toString()`;
-   2.4 Export `module.exports = { handler }`
+To create a Netlify function. You will need
 
-(Optional 1) Use axios (with await) to fetch API. Don't forget to import
-(Optional 2) Use Try/Catch block.
-
-```
-const axios = require('axios')
-
-async function handler() {
-  try {
-    const response =  await axios.get('www.something.com/api?access_key=${api}');
-    return {
-      statusCode: 200,
-      body: JSON.stringify(response.data)
-    };
-  } catch (error) {
-    return {
-      statusCode: 404,
-      body: error.message.toString()
-    };
-  }
-}
-
-module.exports  = { handler };
-```
+1. Create **netlify.toml** and provide build settings.
+2. Create a function with the same name in directory function. (e.g. **functions/YOUR_FUNCTION.js**)
+   2.1 Create and export an async function name **handler**, use **event**, **context** as parameters. `async function handler(event, context) {}`, add your algorithm inside. You may use **axios** for Promise.
+   2.2 Return an object with statusCode and body in JSON.stringify.
 
 ### Usage
 
-At front-end. Fetch by using `await axios('.netlify/functions/fetchExchangeRate')`
+Fetch data with URL `'.netlify/functions/YOUR_FUNCTION'`
 
-### Testing
+### Dev
 
-#### Development
-
-Run `netlify dev` and open browser at `http://localhost:8888`.
-
-#### View JSON
-
-Open browser at `http://localhost:8888/.netlify/functions/YOUR_FILE_NAME`
+Run a command `netlify dev`. It will run local development automatically. Add your Netlify function URL after the local development to see a full API response (e.g. **http://localhost:8888/.netlify/functions/YOUR_FILE_NAME**)
 
 `

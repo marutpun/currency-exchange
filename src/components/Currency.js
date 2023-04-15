@@ -1,141 +1,94 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import { Container, Header, Select, Grid, Table } from 'semantic-ui-react';
-
-import './styles/currency.css';
-import { StateContext, DispatchContext } from '../contexts/CurrencyContext';
-import { changeCountry } from '../reducers/currencyReducer';
-
-import countryCode from '../country.json';
+import React from 'react';
+import clsx from 'clsx';
 
 export default function Currency({ children, ...restProps }) {
-  return <Container {...restProps}>{children}</Container>;
+  return (
+    <div className="container mx-auto" {...restProps}>
+      {children}
+    </div>
+  );
 }
 
 Currency.Title = function CurrencyTitle({ children, ...restProps }) {
   return (
-    <Header as="h1" textAlign="center" {...restProps}>
+    <h1 className="mt-7 mb-4 font-body font-bold text-2xl sm:text-3xl text-center" {...restProps}>
       {children}
-    </Header>
+    </h1>
   );
 };
 
-Currency.Select = function CurrencySelect({ ...restProps }) {
-  const { country } = useContext(StateContext);
-  const dispatch = useContext(DispatchContext);
-
-  const _handleSelectChange = (event, { value: newCountry }) => {
-    dispatch(changeCountry(newCountry));
-  };
-
+Currency.SelectContainer = function SelectContainer({ children, ...restProps }) {
   return (
-    <section className="utils-my-4" {...restProps}>
-      <Select
-        placeholder="Select your currency"
-        options={countryCode}
-        defaultValue={country}
-        onChange={_handleSelectChange}
-      />
+    <section className="flex flex-row flex-wrap justify-center sm:justify-end px-4" {...restProps}>
+      {children}
     </section>
+  );
+};
+
+Currency.Select = function CurrencySelect({ children, ...restProps }) {
+  return (
+    <select
+      className="font-body p-1.5 max-w-full h-10 border-2 border-solid border-black bg-white focus:outline-4 focus:outline-solid focus:outline-yellow-300 focus:outline"
+      id="change-currency"
+      name="change-currency"
+      aria-label="Choose your currency"
+      {...restProps}
+    >
+      {children}
+    </select>
+  );
+};
+
+Currency.Option = function CurrencyOption({ children, value, ...restProps }) {
+  return (
+    <option value={value} {...restProps}>
+      {children}
+    </option>
   );
 };
 
 Currency.Grid = function CurrencyGrid({ children, ...restProps }) {
   return (
-    <Grid columns={4} stackable {...restProps}>
-      <Grid.Row>{children}</Grid.Row>
-    </Grid>
+    <section className="relative flex flex-wrap flex-row w-full items-stretch px-0 my-4" {...restProps}>
+      {children}
+    </section>
   );
 };
-Currency.GridCol = function CurrencyGridCol({ children, ...restProps }) {
-  return <Grid.Column {...restProps}>{children}</Grid.Column>;
-};
 
-Currency.Table = function CurrencyTable({ denom, rate, ...restProps }) {
-  const { country } = useContext(StateContext);
-  const titleUpperCase = country.toUpperCase();
-
+Currency.Column = function CurrencyColumn({ children, ...restProps }) {
   return (
-    <Table inverted compact {...restProps}>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell className="center aligned">EUR</Table.HeaderCell>
-          <Table.HeaderCell className="center aligned">
-            {titleUpperCase}
-          </Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        <Table.Row>
-          <Table.Cell>{(denom * 1).toFixed(2)}</Table.Cell>
-          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>{(denom * 2).toFixed(2)}</Table.Cell>
-          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>{(denom * 3).toFixed(2)}</Table.Cell>
-          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>{(denom * 4).toFixed(2)}</Table.Cell>
-          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>{(denom * 5).toFixed(2)}</Table.Cell>
-          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>{(denom * 6).toFixed(2)}</Table.Cell>
-          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>{(denom * 7).toFixed(2)}</Table.Cell>
-          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>{(denom * 8).toFixed(2)}</Table.Cell>
-          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>{(denom * 9).toFixed(2)}</Table.Cell>
-          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>{(denom * 10).toFixed(2)}</Table.Cell>
-          <Table.Cell>{(denom * rate).toFixed(2)}</Table.Cell>
-        </Table.Row>
-      </Table.Body>
-    </Table>
+    <div className="inline-block relative grow px-4 w-full md:w-1/4" {...restProps}>
+      {children}
+    </div>
   );
 };
 
-Currency.Update = function CurrencyUpdate({ children }) {
-  return <p className="utils-my-4">{children}</p>;
+Currency.Table = function CurrencyTable({ background, fromCurrency, toCurrency, denom, children, rate, ...restProps }) {
+  return (
+    <table className={clsx('border-0', 'text-black', 'w-full', 'mx-0', 'mt-0', 'mb-2', 'rounded', background)} {...restProps}>
+      <thead>
+        <tr>
+          <th scope="col" className="font-body p-3 border-b border-solid border-gray-400 align-top">
+            {fromCurrency.toUpperCase()}
+          </th>
+          <th scope="col" className="font-body p-3 border-b border-solid border-gray-400 align-top">
+            {toCurrency.toUpperCase()}
+          </th>
+        </tr>
+      </thead>
+      <tbody>{children}</tbody>
+    </table>
+  );
 };
 
-Currency.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-Currency.Title.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-Currency.Grid.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-Currency.GridCol.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-Currency.Table.propTypes = {
-  denom: PropTypes.number.isRequired,
-  rate: PropTypes.number.isRequired,
-};
-
-Currency.Update.propTypes = {
-  children: PropTypes.node.isRequired,
+Currency.TbodyRow = function CurrencyTbodyRow({ isLoading, digit, denom, rate, ...restProps }) {
+  const fetchResult = isLoading ? 'fetching...' : ((1 / rate) * denom * digit).toFixed(2);
+  return (
+    <tr {...restProps}>
+      <td scope="row" className="font-body p-2 border-b border-solid border-gray-400">
+        {(digit * denom).toFixed(2)}
+      </td>
+      <td className="text-right font-body p-2 border-b border-solid border-gray-400">{fetchResult}</td>
+    </tr>
+  );
 };

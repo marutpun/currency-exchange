@@ -1,22 +1,21 @@
 const axios = require('axios');
-const api = process.env.EXCHANGE_RATE_API;
+const apikey = process.env.EXCHANGE_RATE_API;
 
-async function handler(event, context) {
+const fetchOptions = {
+  headers: { apikey },
+};
+
+exports.handler = async function (event, context) {
   try {
-    const { data } = await axios.get(
-      `http://api.exchangeratesapi.io/v1/latest?access_key=${api}`
-    );
+    const { data } = await axios.get(`https://api.apilayer.com/exchangerates_data/latest?base=thb`, fetchOptions);
     return {
       statusCode: 200,
       body: JSON.stringify(data),
     };
   } catch (error) {
-    const { message } = error;
     return {
-      statusCode: 404,
-      body: message.toString(),
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Failed fetching data' }),
     };
   }
-}
-
-module.exports = { handler };
+};
