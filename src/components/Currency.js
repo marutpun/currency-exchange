@@ -9,6 +9,10 @@ export default function Currency({ children, ...restProps }) {
   );
 }
 
+Currency.Notification = function CurrencyNotification({ children, ...restProps }) {
+  return <p {...restProps}>{children}</p>;
+};
+
 Currency.Title = function CurrencyTitle({ children, ...restProps }) {
   return (
     <h1 className="mt-7 mb-4 font-body font-bold text-2xl sm:text-3xl text-center" {...restProps}>
