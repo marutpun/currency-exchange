@@ -58,28 +58,28 @@ export function CurrencyContainer() {
             <Currency.Column>
               <Currency.Table background="bg-blue-50" fromCurrency={countryState} toCurrency="thb">
                 {digit.map((unit) => {
-                  return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} isLoading={isLoading} denom="0.1" />;
+                  return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} denom="0.1" />;
                 })}
               </Currency.Table>
             </Currency.Column>
             <Currency.Column>
               <Currency.Table background="bg-green-50" fromCurrency={countryState} toCurrency="thb">
                 {digit.map((unit) => {
-                  return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} isLoading={isLoading} denom="1" />;
+                  return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} denom="1" />;
                 })}
               </Currency.Table>
             </Currency.Column>
             <Currency.Column>
               <Currency.Table background="bg-yellow-50" fromCurrency={countryState} toCurrency="thb">
                 {digit.map((unit) => {
-                  return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} isLoading={isLoading} denom="10" />;
+                  return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} denom="10" />;
                 })}
               </Currency.Table>
             </Currency.Column>
             <Currency.Column>
               <Currency.Table background="bg-red-50" fromCurrency={countryState} toCurrency="thb">
                 {digit.map((unit) => {
-                  return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} isLoading={isLoading} denom="100" />;
+                  return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} denom="100" />;
                 })}
               </Currency.Table>
             </Currency.Column>

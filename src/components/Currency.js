@@ -85,14 +85,13 @@ Currency.Table = function CurrencyTable({ background, fromCurrency, toCurrency, 
   );
 };
 
-Currency.TbodyRow = function CurrencyTbodyRow({ isLoading, digit, denom, rate, ...restProps }) {
-  const fetchResult = isLoading ? 'fetching...' : ((1 / rate) * denom * digit).toFixed(2);
+Currency.TbodyRow = function CurrencyTbodyRow({ digit, denom, rate, ...restProps }) {
   return (
     <tr {...restProps}>
       <td scope="row" className="font-body p-2 border-b border-solid border-gray-400">
         {(digit * denom).toFixed(2)}
       </td>
-      <td className="text-right font-body p-2 border-b border-solid border-gray-400">{fetchResult}</td>
+      <td className="text-right font-body p-2 border-b border-solid border-gray-400">{((1 / rate) * denom * digit).toFixed(2)}</td>
     </tr>
   );
 };
