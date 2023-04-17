@@ -12,6 +12,7 @@ export const initialState = {
   exchangeRateMYR: 0,
   isLoading: false,
   isError: false,
+  isData: false,
 };
 
 export default function currencyReducer(state, action) {
@@ -25,6 +26,7 @@ export default function currencyReducer(state, action) {
         isError: false,
         exchangeRateSGD: action.payload[0],
         exchangeRateMYR: action.payload[1],
+        isData: true,
       };
     case FETCH_FAILURE:
       return {

@@ -8,7 +8,7 @@ import countryCode from '../country.json';
 import digit from '../digit.json';
 
 export function CurrencyContainer() {
-  const { countryState, exchangeRateSGD, exchangeRateMYR, isLoading, isError } = useContext(StateContext);
+  const { countryState, exchangeRateSGD, exchangeRateMYR, isLoading, isError, isData } = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
 
   const rateTable = countryState === 'sgd' ? exchangeRateSGD : exchangeRateMYR;
@@ -27,7 +27,7 @@ export function CurrencyContainer() {
           data: { rates },
         } = response;
         dispatch(fetchSuccess([rates.SGD, rates.MYR]));
-      } catch (error) {
+      } catch (err) {
         dispatch(fetchFailure());
       }
     };
@@ -35,57 +35,67 @@ export function CurrencyContainer() {
     fetchCurrency();
   }, []);
 
-  return (
-    <Currency>
-      {isError && <Currency.Notification>Sorry, something went wrong. Please refresh</Currency.Notification>}
-      {isLoading ? (
+  if (isLoading) {
+    return (
+      <Currency>
         <Currency.Notification>Loading...</Currency.Notification>
-      ) : (
-        <Fragment>
-          <Currency.Title>Currency Cheat Sheet</Currency.Title>
-          <Currency.SelectContainer>
-            <Currency.Select onChange={_handleCurrencyChange}>
-              {countryCode.map((country) => {
-                return (
-                  <Currency.Option key={country.key} value={country.value}>
-                    {country.text}
-                  </Currency.Option>
-                );
+      </Currency>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Currency>
+        <Currency.Notification>Sorry, something went wrong. Please refresh</Currency.Notification>
+      </Currency>
+    );
+  }
+  if (isData) {
+    return (
+      <Currency>
+        <Currency.Title>Currency Cheat Sheet</Currency.Title>
+        <Currency.SelectContainer>
+          <Currency.Select onChange={_handleCurrencyChange}>
+            {countryCode.map((country) => {
+              return (
+                <Currency.Option key={country.key} value={country.value}>
+                  {country.text}
+                </Currency.Option>
+              );
+            })}
+          </Currency.Select>
+        </Currency.SelectContainer>
+        <Currency.Grid>
+          <Currency.Column>
+            <Currency.Table background="bg-blue-50" fromCurrency={countryState} toCurrency="thb">
+              {digit.map((unit) => {
+                return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} denom="0.1" />;
               })}
-            </Currency.Select>
-          </Currency.SelectContainer>
-          <Currency.Grid>
-            <Currency.Column>
-              <Currency.Table background="bg-blue-50" fromCurrency={countryState} toCurrency="thb">
-                {digit.map((unit) => {
-                  return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} denom="0.1" />;
-                })}
-              </Currency.Table>
-            </Currency.Column>
-            <Currency.Column>
-              <Currency.Table background="bg-green-50" fromCurrency={countryState} toCurrency="thb">
-                {digit.map((unit) => {
-                  return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} denom="1" />;
-                })}
-              </Currency.Table>
-            </Currency.Column>
-            <Currency.Column>
-              <Currency.Table background="bg-yellow-50" fromCurrency={countryState} toCurrency="thb">
-                {digit.map((unit) => {
-                  return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} denom="10" />;
-                })}
-              </Currency.Table>
-            </Currency.Column>
-            <Currency.Column>
-              <Currency.Table background="bg-red-50" fromCurrency={countryState} toCurrency="thb">
-                {digit.map((unit) => {
-                  return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} denom="100" />;
-                })}
-              </Currency.Table>
-            </Currency.Column>
-          </Currency.Grid>
-        </Fragment>
-      )}
-    </Currency>
-  );
+            </Currency.Table>
+          </Currency.Column>
+          <Currency.Column>
+            <Currency.Table background="bg-green-50" fromCurrency={countryState} toCurrency="thb">
+              {digit.map((unit) => {
+                return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} denom="1" />;
+              })}
+            </Currency.Table>
+          </Currency.Column>
+          <Currency.Column>
+            <Currency.Table background="bg-yellow-50" fromCurrency={countryState} toCurrency="thb">
+              {digit.map((unit) => {
+                return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} denom="10" />;
+              })}
+            </Currency.Table>
+          </Currency.Column>
+          <Currency.Column>
+            <Currency.Table background="bg-red-50" fromCurrency={countryState} toCurrency="thb">
+              {digit.map((unit) => {
+                return <Currency.TbodyRow key={unit} digit={unit} rate={rateTable} denom="100" />;
+              })}
+            </Currency.Table>
+          </Currency.Column>
+        </Currency.Grid>
+      </Currency>
+    );
+  }
 }
